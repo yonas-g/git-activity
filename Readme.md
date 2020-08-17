@@ -4,7 +4,7 @@
 
 **Make your github activities look busy**
 
-```JavaScript
+```Javascript
 const gitActivity = require("git-busy");
 
 //add remote git repository
