@@ -4,13 +4,15 @@
 
 **Make your github activities look busy**
 
-```Javascript
+```js script
 const gitActivity = require("git-busy");
+
+//init
+gitActivity.init();
 
 //add remote git repository
 gitActivity.addRemote("git@github.com:username/repository.git");
 
 // 420 git commits
 gitActivity.commit(420);
-
 ```
