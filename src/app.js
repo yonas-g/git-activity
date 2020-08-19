@@ -1,14 +1,14 @@
+const fs = require("fs");
 const moment = require("moment");
 const simpleGit = require("simple-git");
-const jsonfile = require("jsonfile");
 
 const FILE_PATH = "./data.json";
 
 const git = simpleGit();
 
 /**
- * commit
- * @param {Number} n
+ * commit to remote repository
+ * @param {Number} n Number of commits
  */
 const makeCommit = (n) => {
     if (n === 0) {
@@ -30,22 +30,29 @@ const makeCommit = (n) => {
         date,
     };
 
-    jsonfile.writeFile(FILE_PATH, data, () => {
-        git.add([FILE_PATH]).commit(
-            date,
-            { "--date": date },
-            makeCommit.bind(this, --n)
-        );
+    fs.writeFile(FILE_PATH, JSON.stringify(data), (err) => {
+        if (err) {
+            console.error(err);
+        } else {
+            git.add([FILE_PATH]).commit(
+                date,
+                { "--date": date },
+                makeCommit.bind(this, --n)
+            );
+        }
     });
 };
 
+/**
+ * Initialize empty git repository
+ */
 const init = () => {
     return git.init();
 };
 
 /**
  * Add remote github repository
- * @param {*} remote
+ * @param {String} remote
  */
 const addRemote = (remote) => {
     git.addRemote("origin", remote, (err, res) => {
